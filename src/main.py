@@ -96,13 +96,13 @@ if config.proxy:
     from util import SocksProxy
     import urllib2
     logging.info("Patching sockets to socks proxy: %s" % config.proxy)
-    config.fileserver_ip = '127.0.0.1'  # Do not accept connections anywhere but localhost
+    config.fileserver_ip = '127.0.0.2'  # Do not accept connections anywhere but localhost
     SocksProxy.monkeyPatch(*config.proxy.split(":"))
 elif config.tor == "always":
     from util import SocksProxy
     import urllib2
     logging.info("Patching sockets to tor socks proxy: %s" % config.tor_proxy)
-    config.fileserver_ip = '127.0.0.1'  # Do not accept connections anywhere but localhost
+    config.fileserver_ip = '127.0.0.2'  # Do not accept connections anywhere but localhost
     SocksProxy.monkeyPatch(*config.tor_proxy.split(":"))
     config.disable_udp = True
 # -- Actions --
@@ -246,7 +246,7 @@ class Actions(object):
         logging.info("Opening a simple connection server")
         global file_server
         from Connection import ConnectionServer
-        file_server = ConnectionServer("127.0.0.1", 1234)
+        file_server = ConnectionServer("127.0.0.2", 1234)
 
         site = Site(address)
 
@@ -280,7 +280,7 @@ class Actions(object):
         logging.info("Opening a simple connection server")
         global file_server
         from Connection import ConnectionServer
-        file_server = ConnectionServer("127.0.0.1", 1234)
+        file_server = ConnectionServer("127.0.0.2", 1234)
 
         site = Site(address)
         site.announce()
@@ -321,7 +321,7 @@ class Actions(object):
         else:
             # Notify local client on new content
             logging.info("Sending siteReload")
-            my_peer = Peer("127.0.0.1", config.fileserver_port)
+            my_peer = Peer("127.0.0.2", config.fileserver_port)
             logging.info(my_peer.request("siteReload", {"site": site.address, "inner_path": inner_path}))
             logging.info("Sending sitePublish")
             logging.info(my_peer.request("sitePublish", {"site": site.address, "inner_path": inner_path, "diffs": diffs}))
@@ -347,7 +347,7 @@ class Actions(object):
         logging.info("Opening a simple connection server")
         global file_server
         from Connection import ConnectionServer
-        file_server = ConnectionServer("127.0.0.1", 1234)
+        file_server = ConnectionServer("127.0.0.2", 1234)
         from Crypt import CryptConnection
         CryptConnection.manager.loadCerts()
 
@@ -368,7 +368,7 @@ class Actions(object):
         logging.info("Opening a simple connection server")
         global file_server
         from Connection import ConnectionServer
-        file_server = ConnectionServer("127.0.0.1", 1234)
+        file_server = ConnectionServer("127.0.0.2", 1234)
         from Crypt import CryptConnection
         CryptConnection.manager.loadCerts()
 

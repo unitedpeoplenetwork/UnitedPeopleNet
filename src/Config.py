@@ -7,11 +7,11 @@ import ConfigParser
 class Config(object):
 
     def __init__(self, argv):
-        self.version = "0.3.7"
+        self.version = "0.3.7_up"
         self.rev = 1210
         self.argv = argv
         self.action = None
-        self.config_file = "zeronet.conf"
+        self.config_file = "upnet.conf"
         self.createParser()
         self.createArguments()
 
@@ -31,15 +31,31 @@ class Config(object):
     # Create command line arguments
     def createArguments(self):
         trackers = [
-            "zero://boot3rdez4rzn36x.onion:15441",
-            "zero://boot.zeronet.io#f36ca555bee6ba216b14d10f38c16f7769ff064e0e37d887603548cc2e64191d:15441",
-            "udp://tracker.coppersurfer.tk:6969",
-            "udp://tracker.leechers-paradise.org:6969",
-            "udp://9.rarbg.com:2710",
-            "http://tracker.aletorrenty.pl:2710/announce",
-            "http://explodie.org:6969/announce",
-            "http://torrent.gresille.org/announce"
-        ]
+		"udp://tracker.openbittorrent.com:80"
+		"http://9.rarbg.com:2710/announce"
+		"http://announce.torrentsmd.com:6969/announce"
+		"http://bt.careland.com.cn:6969/announce"
+		"http://explodie.org:6969/announce"
+		"http://mgtracker.org:2710/announce"
+		"http://tracker.tfile.me/announce"
+		"http://tracker.torrenty.org:6969/announce"
+		"http://tracker.trackerfix.com/announce"
+		"http://www.mvgroup.org:2710/announce"
+		"udp://9.rarbg.com:2710/announce"
+		"udp://9.rarbg.me:2710/announce"
+		"udp://9.rarbg.to:2710/announce"
+		"udp://coppersurfer.tk:6969/announce"
+		"udp://exodus.desync.com:6969/announce"
+		"udp://glotorrents.pw:6969/announce"
+		"udp://open.demonii.com:1337/announce"
+		"udp://tracker.coppersurfer.tk:6969/announce"
+		"udp://tracker.glotorrents.com:6969/announce"
+		"udp://tracker.leechers-paradise.org:6969/announce"
+		"udp://tracker.openbittorrent.com:80/announce"
+		"udp://tracker.opentrackr.org:1337/announce"
+		"udp://tracker.publicbt.com:80/announce"
+		"udp://tracker4.piratux.com:6969/announce"
+	]
         # Platform specific
         if sys.platform.startswith("win"):
             coffeescript = "type %s | tools\\coffee\\coffee.cmd"
@@ -127,16 +143,16 @@ class Config(object):
 
         self.parser.add_argument('--batch', help="Batch mode (No interactive input for commands)", action='store_true')
 
-        self.parser.add_argument('--config_file', help='Path of config file', default="zeronet.conf", metavar="path")
+        self.parser.add_argument('--config_file', help='Path of config file', default="upnet.conf", metavar="path")
         self.parser.add_argument('--data_dir', help='Path of data directory', default="data", metavar="path")
         self.parser.add_argument('--log_dir', help='Path of logging directory', default="log", metavar="path")
 
-        self.parser.add_argument('--ui_ip', help='Web interface bind address', default="127.0.0.1", metavar='ip')
+        self.parser.add_argument('--ui_ip', help='Web interface bind address', default="127.0.0.2", metavar='ip')
         self.parser.add_argument('--ui_port', help='Web interface bind port', default=43110, type=int, metavar='port')
         self.parser.add_argument('--ui_restrict', help='Restrict web access', default=False, metavar='ip', nargs='*')
         self.parser.add_argument('--open_browser', help='Open homepage in web browser automatically',
                                  nargs='?', const="default_browser", metavar='browser_name')
-        self.parser.add_argument('--homepage', help='Web interface Homepage', default='1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D',
+        self.parser.add_argument('--homepage', help='Web interface Homepage', default='1Pt1mXRpTA4NR6byKBXXMbc6E8K5iVEjMh',
                                  metavar='address')
         self.parser.add_argument('--size_limit', help='Default site size limit in MB', default=10, metavar='size')
         self.parser.add_argument('--connected_limit', help='Max connected peer per site', default=15, metavar='connected_limit')
@@ -168,10 +184,10 @@ class Config(object):
                                  metavar='executable_path')
 
         self.parser.add_argument('--tor', help='enable: Use only for Tor peers, always: Use Tor for every connection', choices=["disable", "enable", "always"], default='enable')
-        self.parser.add_argument('--tor_controller', help='Tor controller address', metavar='ip:port', default='127.0.0.1:9051')
-        self.parser.add_argument('--tor_proxy', help='Tor proxy address', metavar='ip:port', default='127.0.0.1:9050')
+        self.parser.add_argument('--tor_controller', help='Tor controller address', metavar='ip:port', default='127.0.0.2:9051')
+        self.parser.add_argument('--tor_proxy', help='Tor proxy address', metavar='ip:port', default='127.0.0.2:9050')
 
-        self.parser.add_argument('--version', action='version', version='ZeroNet %s r%s' % (self.version, self.rev))
+        self.parser.add_argument('--version', action='version', version='UnitedPeopleNet %s r%s' % (self.version, self.rev))
 
         return self.parser
 
@@ -240,7 +256,7 @@ class Config(object):
         self.setAttributes()
 
         if silent:  # Restore original functions
-            if self.parser.exited and self.action == "main":  # Argument parsing halted, don't start ZeroNet with main action
+            if self.parser.exited and self.action == "main":  # Argument parsing halted, don't start UnitedPeopleNet with main action
                 self.action = None
             self.parser._print_message = original_print_message
             self.parser.exit = original_exit
